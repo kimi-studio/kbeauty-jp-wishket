@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>K-Experience Match — 기획 와이어프레임</title>
+  <style>
+    :root{
+      --bg:#f8f6fb; --paper:#fff; --ink:#18141f; --muted:#7c7490;
+      --primary:#7253f4; --soft:#f0ecff; --pink:#ff6b9d; --line:#ede8f7;
+      --ok:#13a660; --shadow:0 8px 24px rgba(50,30,100,.10);
+      --anno:#fff9e6; --annoBorder:#f0d060; --annoText:#7a5c00;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(160deg,#ede8ff,#fff 28%);font-family:Inter,Pretendard,"Noto Sans JP",sans-serif;color:var(--ink);font-size:14px}
+    .wrap{max-width:1400px;margin:20px auto;padding:0 16px}
+    .top{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px}
+    .badge{display:inline-block;background:#ede8ff;color:#5638c9;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:700}
+    h1{margin:6px 0 0;font-size:24px;letter-spacing:-.02em}
+    .sub{font-size:12px;color:var(--muted)}
+    .layout{display:grid;grid-template-columns:240px 1fr;gap:14px;margin-top:12px}
+    .panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+    .flows a{display:block;text-decoration:none;color:var(--ink);padding:9px 11px;border-radius:11px;font-weight:600;font-size:13px;border:1px solid transparent;margin-bottom:5px}
+    .flows a.on,.flows a:hover{background:#f5f2ff;border-color:#d9d0ff}
+
+    /* ── 3-column view: phone + annotation ── */
+    .view{display:grid;grid-template-columns:390px 1fr;gap:16px;align-items:start}
+
+    /* ── phone frame ── */
+    .phone{width:390px;border:10px solid #141019;border-radius:40px;overflow:hidden;box-shadow:0 24px 56px rgba(0,0,0,.20)}
+    .status{height:28px;background:#0d0b14;color:#fff;padding:6px 14px;font-size:12px;display:flex;justify-content:space-between}
+    .screen{height:710px;background:var(--bg);overflow-y:auto;overflow-x:hidden;position:relative}
+    .appHead{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+    .appHead .title{font-size:16px;font-weight:700}
+    .appHead .sub{font-size:12px;color:var(--muted)}
+    .content{padding:12px}
+    .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px;margin-bottom:9px}
+    .hero{background:linear-gradient(135deg,var(--primary),#9b7ff8);color:#fff;border:none}
+    .s{font-size:12px;color:var(--muted)} .hero .s{color:#f0eaff}
+    .tag{display:inline-block;font-size:11px;font-weight:600;border-radius:999px;padding:4px 8px;background:var(--soft);color:#5c43d9;margin:2px 3px 2px 0}
+    .price{font-weight:800;color:#3d2a9c;font-size:13px}
+    .btn{border:0;border-radius:11px;padding:10px 14px;background:var(--primary);color:#fff;font-weight:700;font-size:13px;cursor:pointer}
+    .btn.soft{background:var(--soft);color:#5b40d6}
+    .btn.full{width:100%;display:block;margin-top:8px}
+    .input{width:100%;padding:10px 12px;border:1px solid #ddd7ee;border-radius:11px;background:#fff;font-size:13px;margin:5px 0 8px}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+    .row{display:flex;gap:8px;align-items:center} .between{justify-content:space-between}
+    .cats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:8px 0}
+    .cat-item{text-align:center;padding:10px 4px;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:11px;font-weight:600;cursor:pointer}
+    .cat-item .ico{font-size:22px;margin-bottom:4px}
+    .ex-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px;margin-bottom:9px;display:flex;gap:10px}
+    .avatar{width:60px;height:60px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;background:#e8e1fd}
+    .ex-info{flex:1}
+    .ex-name{font-weight:700;font-size:14px;margin-bottom:2px}
+    .ex-cat{font-size:11px;color:var(--primary);font-weight:600}
+    .star{color:#f4a800}
+    .tabbar{display:flex;background:#fff;border-top:1px solid var(--line)}
+    .tab{flex:1;text-align:center;padding:10px 4px;font-size:11px;color:#9a93ad}
+    .tab.on{color:#6242e8;font-weight:700}
+
+    /* ── annotation panel ── */
+    .anno-wrap{display:flex;flex-direction:column;gap:12px}
+    .anno-section{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    .anno-head{background:#f5f2ff;padding:9px 12px;font-weight:700;font-size:13px;border-bottom:1px solid var(--line);color:#4432aa;display:flex;align-items:center;gap:6px}
+    .anno-items{padding:10px 12px;display:flex;flex-direction:column;gap:7px}
+    .anno-item{display:flex;gap:8px;align-items:flex-start}
+    .anno-num{min-width:20px;height:20px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0}
+    .anno-body{flex:1}
+    .anno-label{font-weight:700;font-size:13px;margin-bottom:2px}
+    .anno-desc{font-size:12px;color:#4a4460;line-height:1.55}
+    .anno-note{display:inline-block;background:var(--anno);border:1px solid var(--annoBorder);border-radius:6px;color:var(--annoText);font-size:11px;padding:3px 7px;margin-top:3px}
+    .ux-box{background:#f0fff8;border:1px solid #9fe8c7;border-radius:10px;padding:9px 11px;margin-top:4px;font-size:12px;color:#0a6640}
+    .tech-box{background:#f0f4ff;border:1px solid #b0c4ff;border-radius:10px;padding:9px 11px;margin-top:4px;font-size:12px;color:#1a3a8a}
+
+    .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:12px}
+    .legend-item{display:flex;gap:5px;align-items:center;font-size:12px}
+    .dot{width:12px;height:12px;border-radius:3px}
+
+    @media(max-width:980px){.layout{grid-template-columns:1fr}.view{grid-template-columns:1fr}.phone{margin:0 auto}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <span class="badge">기획 와이어프레임 v4 · 한국어 주석 포함</span>
+      <h1>K-Experience 매칭 플랫폼 — 화면 설계서</h1>
+    </div>
+    <div class="sub">일본인 관광객 타겟 · 메이크업/댄스/보컬/퍼스널컬러/가이드/의상/촬영</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="dot" style="background:#7253f4"></div> UI 컴포넌트</div>
+    <div class="legend-item"><div class="dot" style="background:#fff9e6;border:1px solid #f0d060"></div> 기획 의도</div>
+    <div class="legend-item"><div class="dot" style="background:#f0fff8;border:1px solid #9fe8c7"></div> UX 원칙</div>
+    <div class="legend-item"><div class="dot" style="background:#f0f4ff;border:1px solid #b0c4ff"></div> 개발 참고</div>
+  </div>
+
+  <div class="layout" style="margin-top:10px">
+    <aside class="panel">
+      <div style="font-weight:700;margin-bottom:8px;font-size:14px">📋 화면 목록</div>
+      <nav class="flows" id="flows"></nav>
+      <div style="margin-top:12px;padding:10px;background:#f8f5ff;border-radius:10px;font-size:12px;color:#4a3888">
+        <b>🎯 프로젝트 한 줄 정의</b><br/>
+        일본 관광객이 한국 전문가(메이크업·댄스·보컬·퍼스널컬러·가이드·의상·촬영)를 찾고, 상담하고, 예약하는 O2O 매칭 플랫폼
+      </div>
+    </aside>
+    <section class="panel" id="main"></section>
+  </div>
+</div>
+
+<script>
+const experts=[
+  {id:1,name:'キム・ミンジ',nameKr:'김민지',cat:'메이크업',catJp:'メイクアップ',ico:'💄',rating:'4.9',reviews:234,area:'明洞',price:'¥8,000',lang:'JP·KR',avatar:'💄'},
+  {id:2,name:'イ・ジュン',nameKr:'이준',cat:'K-POPダンス',catJp:'ダンス',ico:'💃',rating:'5.0',reviews:89,area:'弘大',price:'¥12,000',lang:'JP·KR',avatar:'🕺'},
+  {id:3,name:'チェ・ユナ',nameKr:'최유나',cat:'보컬',catJp:'ボーカル',ico:'🎤',rating:'4.9',reviews:312,area:'ソウル全域',price:'¥10,000',lang:'JP·KR',avatar:'🎤'},
+  {id:4,name:'パク・ソヒ',nameKr:'박소희',cat:'퍼스널컬러',catJp:'パーソナルカラー',ico:'🎨',rating:'4.8',reviews:156,area:'江南',price:'¥15,000',lang:'JP·KR',avatar:'🎨'},
+  {id:5,name:'カン・ジウォン',nameKr:'강지원',cat:'가이드',catJp:'ガイド',ico:'🗺️',rating:'4.7',reviews:67,area:'ソウル全域',price:'¥18,000',lang:'JP·KR',avatar:'🗺️'},
+  {id:6,name:'ソン・ミナ',nameKr:'송미나',cat:'의상대여',catJp:'コスチューム',ico:'👘',rating:'4.8',reviews:198,area:'仁寺洞',price:'¥6,000',lang:'JP·KR',avatar:'👘'},
+  {id:7,name:'ユン・テヒ',nameKr:'윤태희',cat:'포토그래퍼',catJp:'フォト撮影',ico:'📸',rating:'4.9',reviews:421,area:'ソウル全域',price:'¥20,000',lang:'JP·KR',avatar:'📸'},
+];
+const cats=[
+  {ico:'💄',jp:'メイク',kr:'메이크업'},
+  {ico:'💃',jp:'ダンス',kr:'K-POP댄스'},
+  {ico:'🎤',jp:'ボーカル',kr:'보컬'},
+  {ico:'🎨',jp:'パーソナルカラー',kr:'퍼스널컬러'},
+  {ico:'🗺️',jp:'ガイド',kr:'가이드'},
+  {ico:'👘',jp:'コスチューム',kr:'의상대여'},
+  {ico:'📸',jp:'フォト',kr:'촬영'},
+  {ico:'＋',jp:'すべて',kr:'전체'},
+];
+function exCard(e){return`<div class='ex-card'><div class='avatar'>${e.avatar}</div><div class='ex-info'><div class='ex-name'>${e.name}</div><div class='ex-cat'>${e.catJp}</div><div class='s row' style='margin-top:3px'><span class='star'>★</span>${e.rating} (${e.reviews}件) · ${e.area}</div><div class='row between' style='margin-top:5px'><span class='tag'>${e.lang}</span><span class='price'>${e.price}〜</span></div></div></div>`;}
+
+const screens=[
+{id:'home',title:'1) 홈 화면',
+phoneHtml:`
+<div class='appHead'><div><div class='title'>こんにちは！</div><div class='sub'>韓国体験を予約しよう</div></div><span>🔔</span></div>
+<div class='content'>
+  <input class='input' placeholder='💬 体験・エキスパートを検索'>
+  <div class='card' style='padding:10px'>
+    <div class='s' style='margin-bottom:6px;font-weight:600'>カテゴリー</div>
+    <div class='cats'>${cats.map(c=>`<div class='cat-item'><div class='ico'>${c.ico}</div>${c.jp}</div>`).join('')}</div>
+  </div>
+  <div class='s' style='padding:0 2px 6px;font-weight:700'>おすすめエキスパート</div>
+  ${experts.slice(0,3).map(e=>exCard(e)).join('')}
+</div>`,
+tab:'home',
+anno:[
+  {n:1,label:'상단 GNB (글로벌 네비게이션 바)',desc:'왼쪽: 인사 문구(이름 개인화), 오른쪽: 알림 아이콘. 일본어 기본 표시.',note:'로그인 후 닉네임 반영'},
+  {n:2,label:'통합 검색창',desc:'전문가 이름, 체험 카테고리, 지역명을 한 번에 검색 가능. 탭하면 최근 검색어/자동완성 표시.',note:'UX: 입력 전 인기 키워드 노출 권장',ux:'검색은 앱 진입 후 가장 자주 쓰는 기능. 상단 고정 필수.'},
+  {n:3,label:'카테고리 그리드',desc:'7가지 체험 카테고리를 아이콘+이름으로 2×4 그리드 배치. 탭 시 해당 카테고리 전문가 리스트로 이동.',note:'7개 카테고리: 메이크업/댄스/보컬/퍼스널컬러/가이드/의상/촬영',ux:'일본 사용자: 카테고리 아이콘이 언어 장벽 없이 직관적 진입 유도'},
+  {n:4,label:'추천 전문가 카드 리스트',desc:'아바타/이름/카테고리/별점+리뷰수/지역/언어지원/시작가격을 한 카드에 표시.',note:'개인화 추천 또는 인기순 기본 정렬',tech:'추천 알고리즘: 체류 지역 + 관심 카테고리 기반'}
+]},
+
+{id:'list',title:'2) 검색/리스트',
+phoneHtml:`
+<div class='appHead'><div class='title'>ダンス講師を探す</div><span class='tag'>필터</span></div>
+<div class='content'>
+  <div><span class='tag' style='background:#7253f4;color:#fff'>💃 ダンス</span><span class='tag'>江南</span><span class='tag'>¥〜15,000</span><span class='tag'>日本語対応</span></div>
+  <div class='s' style='margin:8px 0 4px'>7명의 전문가</div>
+  ${experts.map(e=>exCard(e)).join('')}
+</div>`,
+tab:'list',
+anno:[
+  {n:1,label:'활성 필터 칩',desc:'선택된 필터가 보라색 강조 칩으로 표시. X 버튼으로 개별 해제 가능.',note:'필터 항목: 카테고리 / 지역 / 가격대 / 언어지원'},
+  {n:2,label:'검색 결과 수',desc:'"7명의 전문가" — 현재 필터 기준 결과 수를 명시. 0건일 경우 대안 추천 UI 노출.',ux:'결과 수 표시는 사용자의 탐색 피로 감소에 효과적'},
+  {n:3,label:'전문가 카드',desc:'세로 스크롤 리스트. 카드 탭 시 해당 전문가 상세 페이지로 이동. 사진/이름/전공/평점/지역/언어/가격 고정 표시.',note:'카드 높이 균일 유지 → 비교 스트레스 감소',tech:'무한스크롤 또는 페이지네이션 20개 단위 권장'}
+]},
+
+{id:'profile',title:'3) 전문가 프로필',
+phoneHtml:`
+<div class='appHead'><div class='title'>エキスパート詳細</div></div>
+<div class='content'>
+  <div style='text-align:center;padding:16px 0 10px'>
+    <div style='font-size:56px'>💃</div>
+    <div style='font-weight:700;font-size:18px;margin:4px 0 2px'>イ・ジュン</div>
+    <div style='color:var(--primary);font-weight:600;font-size:13px'>K-POPダンスインストラクター</div>
+    <div class='s' style='margin:4px 0'><span class='star'>★</span>5.0 (89件) · 弘大、ソウル</div>
+    <span class='tag'>日本語OK</span><span class='tag'>韓国語</span>
+  </div>
+  <div class='card'><b>自己紹介</b><p class='s'>K-POPグループの振り付けを1対1でレクチャー。初心者でも安心。楽しく学べる環境を大切にしています。</p></div>
+  <div class='card'><b>メニュー & 料金</b>
+    <div class='row between' style='margin-top:7px'><span class='s'>1回レッスン (60分)</span><span class='price'>¥12,000</span></div>
+    <div class='row between' style='margin:5px 0'><span class='s'>3回パック</span><span class='price'>¥30,000</span></div>
+    <div class='row between'><span class='s'>カップル/グループ +1名</span><span class='price'>+¥5,000</span></div>
+  </div>
+  <div class='card'><b>レビュー ★5.0</b><p class='s'>「振り付けが丁寧で楽しかったです！日本語でしっかり説明してくれました。」— ゆりか</p></div>
+  <div class='split' style='margin-top:4px'><button class='btn soft'>相談する</button><button class='btn'>予約に進む</button></div>
+</div>`,
+tab:'profile',
+anno:[
+  {n:1,label:'전문가 헤더 (사진+이름+카테고리)',desc:'전문가 대표 사진(실제 서비스에서는 고화질 프로필 이미지), 이름, 전문 분야, 별점, 활동 지역을 최상단 집약.',note:'신뢰 구축의 핵심 구역 — 첫 3초 인상 결정',ux:'사진 품질이 예약 전환율에 직결. 전문가 사진 가이드라인 필요'},
+  {n:2,label:'언어 지원 배지',desc:'日本語OK 배지를 이름 바로 아래 배치 → 일본 사용자의 첫 번째 불안 즉시 해소.',note:'언어 배지는 검색 필터와 연동'},
+  {n:3,label:'메뉴 & 요금표',desc:'메뉴별 소요시간/가격을 테이블 형식으로 나열. 옵션 추가 비용도 명시.',note:'가격 투명성: 바비톡/강남언니의 핵심 신뢰 요소',tech:'가격은 전문가가 어드민에서 직접 설정'},
+  {n:4,label:'리뷰 섹션',desc:'최신 리뷰 3건 기본 노출 → "더 보기" 확장. 별점 평균 + 총 리뷰 수 표시.',ux:'일본 사용자는 리뷰 의존도 높음 — 일본어 리뷰 우선 노출 로직 필요'},
+  {n:5,label:'이중 CTA 버튼',desc:'"상담하기(채팅 진입)" + "예약하기" 두 버튼을 나란히. 부담 없이 먼저 상담 가능.',note:'상담→예약 전환율이 직접 예약 전환율보다 높을 것으로 예상'}
+]},
+
+{id:'booking',title:'4) 예약 폼',
+phoneHtml:`
+<div class='appHead'><div class='title'>予約</div><div class='s'>STEP 1/3</div></div>
+<div class='content'>
+  <div style='display:flex;gap:6px;margin-bottom:12px'>
+    <div style='flex:1;height:4px;border-radius:4px;background:var(--primary)'></div>
+    <div style='flex:1;height:4px;border-radius:4px;background:var(--line)'></div>
+    <div style='flex:1;height:4px;border-radius:4px;background:var(--line)'></div>
+  </div>
+  <div class='card'>
+    <div class='s'>레슨 날짜</div><input class='input' value='2026-04-30'>
+    <div class='s'>시간</div><input class='input' value='14:00 〜 15:00'>
+    <div class='s'>인원</div>
+    <div class='split'><button class='btn soft'>1명</button><button class='btn'>2명</button></div>
+  </div>
+  <div class='card'>
+    <div class='s'>추가 옵션</div>
+    <div style='margin-top:7px'><span class='tag'>안무 영상 제공 +¥2,000</span></div>
+    <div style='margin-top:5px'><span class='tag'>의상 대여 추가 +¥5,000</span></div>
+  </div>
+  <p class='s' style='padding:0 2px;text-align:center'>※ 아직 예약이 확정되지 않았습니다</p>
+  <button class='btn full'>다음 단계 (요금 확인)</button>
+</div>`,
+tab:'booking',
+anno:[
+  {n:1,label:'3단계 진행 표시바',desc:'예약 흐름을 날짜선택→옵션→결제 3단계로 시각화. 현재 단계 강조.',ux:'진행 표시는 이탈률 감소에 효과적 — 사용자가 "얼마나 남았는지" 인지'},
+  {n:2,label:'날짜/시간 입력',desc:'캘린더 팝업 또는 바텀시트 선택 UI. 전문가 가용 시간만 선택 가능하도록.',note:'전문가 캘린더 연동 필요 (어드민에서 일정 블록)',tech:'Google Calendar API 또는 자체 스케줄러 구현'},
+  {n:3,label:'인원 선택 버튼',desc:'1명/2명/그룹(3+) 버튼형 선택. 인원에 따라 가격 자동 계산.',ux:'드롭다운 대신 버튼형 → 탭 조작 1회 완료'},
+  {n:4,label:'추가 옵션 칩',desc:'전문가가 설정한 부가 서비스를 선택형 칩으로 노출. 선택 시 금액에 자동 반영.',note:'옵션 추가로 단가 상승 유도 (upsell)'},
+  {n:5,label:'안심 문구',desc:'"아직 예약이 확정되지 않았습니다" — 결제 전 심리적 부담 제거.',ux:'일본 사용자는 실수에 민감 → 취소/확정 시점 명확화 필수'}
+]},
+
+{id:'payment',title:'5) 결제',
+phoneHtml:`
+<div class='appHead'><div class='title'>결제하기</div><div class='s'>STEP 3/3</div></div>
+<div class='content'>
+  <div style='display:flex;gap:6px;margin-bottom:12px'>
+    <div style='flex:1;height:4px;border-radius:4px;background:var(--ok)'></div>
+    <div style='flex:1;height:4px;border-radius:4px;background:var(--ok)'></div>
+    <div style='flex:1;height:4px;border-radius:4px;background:var(--primary)'></div>
+  </div>
+  <div class='card'>
+    <div class='s' style='font-weight:700;margin-bottom:8px'>예약 내용 확인</div>
+    <div class='s'>이준 · K-POP 댄스 60분</div>
+    <div class='s'>4/30 14:00 · 2명 · 홍대</div>
+  </div>
+  <div class='card'>
+    <div class='row between'><span class='s'>레슨 요금</span><b>¥24,000</b></div>
+    <div class='row between'><span class='s'>영상 제공 옵션</span><b>¥2,000</b></div>
+    <div class='row between'><span class='s'>서비스 수수료</span><b>¥1,300</b></div>
+    <hr style='border:none;border-top:1px solid var(--line);margin:9px 0'>
+    <div class='row between'><b>합계</b><b style='color:#3d2a9c;font-size:15px'>¥27,300</b></div>
+  </div>
+  <button class='btn full'>카드로 결제하기</button>
+  <button class='btn soft full'>Apple Pay / Google Pay</button>
+</div>`,
+tab:'booking',
+anno:[
+  {n:1,label:'예약 내용 요약 카드',desc:'결제 전 선택한 전문가/메뉴/날짜/인원을 최종 확인. 이 화면에서 되돌아가기 가능.',note:'바비톡/강남언니처럼 결제 직전 내용 재확인 필수'},
+  {n:2,label:'요금 투명 내역',desc:'레슨 요금, 옵션, 플랫폼 수수료를 각 항목별로 분리 표시. 합계는 굵게 강조.',ux:'일본 사용자는 숨겨진 비용에 매우 민감 → 투명한 내역 표시가 신뢰 핵심'},
+  {n:3,label:'결제 수단 선택',desc:'카드 결제(기본) + Apple Pay / Google Pay 제공. 해외 카드(Visa/Master) 지원 필수.',tech:'결제 PG: Portone(아임포트) 또는 Stripe 권장 — 해외 카드 처리',note:'JPY 표시 기본, 원화 환율 안내 옵션'}
+]},
+
+{id:'chat',title:'6) 상담 채팅',
+phoneHtml:`
+<div class='appHead'><div class='row between'><div class='title'>💬 이준 강사님</div><span class='tag'>🔄 자동번역 ON</span></div></div>
+<div class='content'>
+  <div class='card s'>이준: レッスンについてご質問があればなんでもどうぞ！日本語で対応します。</div>
+  <div class='card s' style='background:#f5f2ff;border-color:#d9d0ff'>손님: グループで参加できますか？</div>
+  <div class='card s'>이준: はい、2〜4名まで対応可能です。グループ割もあります😊</div>
+  <div class='card'>
+    <div class='s' style='font-weight:600;margin-bottom:7px'>자주 묻는 질문</div>
+    <span class='tag'>소요시간은?</span><span class='tag'>초보자도 OK?</span><span class='tag'>당일 예약?</span><span class='tag'>통역 비용?</span>
+  </div>
+  <div class='row' style='gap:7px'>
+    <input class='input' style='margin:0;flex:1' placeholder='메시지를 입력하세요'>
+    <button class='btn' style='padding:10px 14px'>전송</button>
+  </div>
+</div>`,
+tab:'chat',
+anno:[
+  {n:1,label:'자동번역 토글',desc:'JP↔KR 실시간 번역 상태를 헤더에 상시 표시. 탭하면 ON/OFF 전환.',tech:'DeepL API 또는 Google Translate API 연동',ux:'번역이 켜져있다는 시각적 안심감이 대화 시작 허들을 낮춤'},
+  {n:2,label:'채팅 말풍선 구분',desc:'전문가 메시지: 흰 배경 좌측 / 손님 메시지: 보라 배경 우측 정렬.',note:'원문+번역문을 함께 표시하는 옵션 2차 기능 고려'},
+  {n:3,label:'자주 묻는 질문 퀵버튼',desc:'입력 부담 없이 자주 묻는 질문을 버튼 한 번으로 전송. 전문가별 커스터마이징 가능.',ux:'일본 사용자는 외국어 타이핑 자체를 부담스러워함 → 템플릿 버튼 효과 큼'},
+  {n:4,label:'텍스트 입력 영역',desc:'키보드 올라올 때 채팅창 자동 스크롤. 이미지/사진 첨부 2차 기능.',tech:'WebSocket 실시간 통신 구현 필요'}
+]},
+
+{id:'mypage',title:'7) 마이페이지',
+phoneHtml:`
+<div class='appHead'><div class='title'>마이페이지</div></div>
+<div class='content'>
+  <div class='card hero'>
+    <div class='s'>다음 예약</div>
+    <b>K-POP 댄스 1:1 레슨</b>
+    <p class='s'>4/30 14:00 · 이준 강사 · 홍대</p>
+    <span class='tag' style='background:rgba(255,255,255,.2);color:#fff'>예약 확정 ✓</span>
+  </div>
+  <div class='s' style='padding:2px 2px 6px;font-weight:700'>이전 체험</div>
+  ${experts.slice(0,2).map(e=>`<div class='ex-card'><div class='avatar'>${e.avatar}</div><div class='ex-info'><div class='ex-name'>${e.name} · ${e.catJp}</div><div class='s'>체험 완료</div><button class='btn soft' style='margin-top:5px;padding:6px 10px;font-size:11px'>리뷰 작성하기</button></div></div>`).join('')}
+  <div class='card' style='margin-top:4px'><b>고객센터</b><p class='s'>24시간 일본어 채팅 지원</p></div>
+</div>`,
+tab:'mypage',
+anno:[
+  {n:1,label:'다음 예약 히어로 카드',desc:'가장 임박한 예약을 최상단 강조 카드로 배치. 날짜/시간/전문가/장소 + 확정 상태 표시.',ux:'예약 후 설레임 유지 → 재예약/리뷰 전환율 상승',note:'D-2 이하이면 "준비물 안내" 푸시 알림 발송 권장'},
+  {n:2,label:'이전 체험 리스트',desc:'완료된 체험 목록 + 리뷰 작성 CTA. 리뷰 미작성 시 배지 강조.',ux:'리뷰는 플랫폼 신뢰 자산 — 작성 유도 UX 중요',tech:'리뷰 작성 완료 시 포인트/쿠폰 지급 고려'},
+  {n:3,label:'고객센터 진입',desc:'일본어 지원 고객센터 링크 항상 노출. 카카오채널 또는 인앱 채팅.',note:'24시간 대응 가능 여부 명시 필요'}
+]}
+];
+
+const flows=document.getElementById('flows'), main=document.getElementById('main');
+function annoHtml(a){
+  let h=`<div class='anno-item'><div class='anno-num'>${a.n}</div><div class='anno-body'><div class='anno-label'>${a.label}</div><div class='anno-desc'>${a.desc}</div>`;
+  if(a.note) h+=`<span class='anno-note'>📌 ${a.note}</span>`;
+  if(a.ux) h+=`<div class='ux-box'>💚 UX 원칙: ${a.ux}</div>`;
+  if(a.tech) h+=`<div class='tech-box'>🔧 개발 참고: ${a.tech}</div>`;
+  h+=`</div></div>`;
+  return h;
+}
+function render(id){
+  const s=screens.find(x=>x.id===id)||screens[0];
+  flows.innerHTML=screens.map(x=>`<a href='#${x.id}' class='${x.id===s.id?'on':''}'>${x.title}</a>`).join('');
+  main.innerHTML=`<div class='view'>
+    <div class='phone'>
+      <div class='status'><span>9:41</span><span>5G 🔋</span></div>
+      <div class='screen'>${s.phoneHtml}</div>
+      <div class='tabbar'>
+        <div class='tab ${s.tab==='home'||s.tab==='list'?'on':''}'>🏠 ホーム</div>
+        <div class='tab ${s.tab==='profile'?'on':''}'>👤 プロフィール</div>
+        <div class='tab ${s.tab==='booking'?'on':''}'>📅 予約</div>
+        <div class='tab ${s.tab==='chat'?'on':''}'>💬 相談</div>
+        <div class='tab ${s.tab==='mypage'?'on':''}'>⚙️ マイページ</div>
+      </div>
+    </div>
+    <div class='anno-wrap'>
+      <div class='anno-section'>
+        <div class='anno-head'>📝 화면 설명 — ${s.title}</div>
+        <div class='anno-items'>${s.anno.map(a=>annoHtml(a)).join('')}</div>
+      </div>
+    </div>
+  </div>`;
+}
+window.addEventListener('hashchange',()=>render(location.hash.slice(1)));
+render(location.hash.slice(1)||'home');
+</script>
+</body>
+</html>
