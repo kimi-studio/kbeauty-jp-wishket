@@ -1,0 +1,121 @@
+<svg width="430" height="932" viewBox="0 0 430 932" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Status Bar -->
+  <rect width="430" height="44" fill="url(#statusGradient)"/>
+  <text x="20" y="29" font-family="system-ui" font-size="14" font-weight="500" fill="white">9:41</text>
+  <text x="370" y="29" font-family="system-ui" font-size="14" font-weight="500" fill="white">5G 🔋</text>
+
+  <!-- Navigation Bar -->
+  <rect y="44" width="430" height="64" fill="white" opacity="0.95"/>
+  <line x1="0" y1="108" x2="430" y2="108" stroke="#E7E5E4"/>
+  <text x="24" y="85" font-size="20">←</text>
+  <text x="200" y="85" font-family="system-ui" font-size="20" font-weight="700" fill="#1C1917" text-anchor="middle">メイクアップ</text>
+  <text x="390" y="85" font-size="20">⚙️</text>
+
+  <!-- Content -->
+  <rect y="108" width="430" height="824" fill="#FAFAF9"/>
+
+  <!-- Filter Bar -->
+  <g id="filters">
+    <rect x="20" y="128" width="70" height="32" rx="16" fill="#8B5CF6"/>
+    <text x="55" y="148" font-family="system-ui" font-size="13" font-weight="600" fill="white" text-anchor="middle">すべて</text>
+
+    <rect x="98" y="128" width="60" height="32" rx="16" fill="white" stroke="#E7E5E4" stroke-width="2"/>
+    <text x="128" y="148" font-family="system-ui" font-size="13" font-weight="600" fill="#1C1917" text-anchor="middle">明洞</text>
+
+    <rect x="166" y="128" width="60" height="32" rx="16" fill="white" stroke="#E7E5E4" stroke-width="2"/>
+    <text x="196" y="148" font-family="system-ui" font-size="13" font-weight="600" fill="#1C1917" text-anchor="middle">江南</text>
+
+    <rect x="234" y="128" width="60" height="32" rx="16" fill="white" stroke="#E7E5E4" stroke-width="2"/>
+    <text x="264" y="148" font-family="system-ui" font-size="13" font-weight="600" fill="#1C1917" text-anchor="middle">弘大</text>
+  </g>
+
+  <!-- Results Count -->
+  <text x="20" y="188" font-family="system-ui" font-size="14" fill="#78716C">12人のエキスパートが見つかりました</text>
+
+  <!-- Expert Cards -->
+  <!-- Card 1 -->
+  <rect x="20" y="204" width="390" height="112" rx="16" fill="white" stroke="#E7E5E4"/>
+  <rect x="36" y="220" width="72" height="72" rx="12" fill="url(#avatarGradient)" stroke="#E7E5E4" stroke-width="2"/>
+  <text x="72" y="266" font-size="36" text-anchor="middle">💄</text>
+  <text x="120" y="238" font-family="system-ui" font-size="16" font-weight="700" fill="#1C1917">キム・ミンジ</text>
+  <text x="120" y="256" font-family="system-ui" font-size="13" font-weight="600" fill="#8B5CF6">メイクアップアーティスト</text>
+  <text x="120" y="272" font-family="system-ui" font-size="12" fill="#F59E0B">★ 4.9</text>
+  <text x="165" y="272" font-family="system-ui" font-size="12" fill="#78716C">• 234件 • 明洞</text>
+
+  <line x1="36" y1="304" x2="394" y2="304" stroke="#E7E5E4"/>
+  <rect x="36" y="314" width="82" height="24" rx="6" fill="#D1FAE5"/>
+  <text x="44" y="330" font-family="system-ui" font-size="11" font-weight="600" fill="#065F46">日本語OK</text>
+  <rect x="126" y="314" width="60" height="24" rx="6" fill="#FAF5FF"/>
+  <text x="134" y="330" font-family="system-ui" font-size="11" font-weight="600" fill="#8B5CF6">韓国語</text>
+  <text x="340" y="332" font-family="system-ui" font-size="16" font-weight="800" fill="#8B5CF6">¥8,000〜</text>
+
+  <!-- Card 2 -->
+  <rect x="20" y="332" width="390" height="112" rx="16" fill="white" stroke="#E7E5E4"/>
+  <rect x="36" y="348" width="72" height="72" rx="12" fill="url(#avatarGradient)" stroke="#E7E5E4" stroke-width="2"/>
+  <text x="72" y="394" font-size="36" text-anchor="middle">💄</text>
+  <text x="120" y="366" font-family="system-ui" font-size="16" font-weight="700" fill="#1C1917">チョン・ユジン</text>
+  <text x="120" y="384" font-family="system-ui" font-size="13" font-weight="600" fill="#8B5CF6">ブライダルメイク専門</text>
+  <text x="120" y="400" font-family="system-ui" font-size="12" fill="#F59E0B">★ 4.9</text>
+  <text x="165" y="400" font-family="system-ui" font-size="12" fill="#78716C">• 187件 • 江南</text>
+
+  <line x1="36" y1="432" x2="394" y2="432" stroke="#E7E5E4"/>
+  <rect x="36" y="442" width="82" height="24" rx="6" fill="#D1FAE5"/>
+  <text x="44" y="458" font-family="system-ui" font-size="11" font-weight="600" fill="#065F46">日本語OK</text>
+  <rect x="126" y="442" width="50" height="24" rx="6" fill="#FAF5FF"/>
+  <text x="134" y="458" font-family="system-ui" font-size="11" font-weight="600" fill="#8B5CF6">英語</text>
+  <text x="330" y="460" font-family="system-ui" font-size="16" font-weight="800" fill="#8B5CF6">¥12,000〜</text>
+
+  <!-- Card 3 -->
+  <rect x="20" y="460" width="390" height="112" rx="16" fill="white" stroke="#E7E5E4"/>
+  <rect x="36" y="476" width="72" height="72" rx="12" fill="url(#avatarGradient)" stroke="#E7E5E4" stroke-width="2"/>
+  <text x="72" y="522" font-size="36" text-anchor="middle">💄</text>
+  <text x="120" y="494" font-family="system-ui" font-size="16" font-weight="700" fill="#1C1917">ユン・ソラ</text>
+  <text x="120" y="512" font-family="system-ui" font-size="13" font-weight="600" fill="#8B5CF6">K-ビューティーメイク</text>
+  <text x="120" y="528" font-family="system-ui" font-size="12" fill="#F59E0B">★ 4.8</text>
+  <text x="165" y="528" font-family="system-ui" font-size="12" fill="#78716C">• 143件 • 弘大</text>
+
+  <line x1="36" y1="560" x2="394" y2="560" stroke="#E7E5E4"/>
+  <rect x="36" y="570" width="82" height="24" rx="6" fill="#D1FAE5"/>
+  <text x="44" y="586" font-family="system-ui" font-size="11" font-weight="600" fill="#065F46">日本語OK</text>
+  <text x="340" y="588" font-family="system-ui" font-size="16" font-weight="800" fill="#8B5CF6">¥9,500〜</text>
+
+  <!-- Bottom Navigation -->
+  <rect y="868" width="430" height="64" fill="white"/>
+  <line x1="0" y1="868" x2="430" y2="868" stroke="#E7E5E4"/>
+
+  <g id="nav-home">
+    <text x="43" y="892" font-size="22" text-anchor="middle">🏠</text>
+    <text x="43" y="918" font-family="system-ui" font-size="11" font-weight="600" fill="#78716C" text-anchor="middle">ホーム</text>
+  </g>
+
+  <g id="nav-search">
+    <text x="129" y="892" font-size="22" text-anchor="middle">🔍</text>
+    <text x="129" y="918" font-family="system-ui" font-size="11" font-weight="600" fill="#8B5CF6" text-anchor="middle">探す</text>
+  </g>
+
+  <g id="nav-bookings">
+    <text x="215" y="892" font-size="22" text-anchor="middle">📅</text>
+    <text x="215" y="918" font-family="system-ui" font-size="11" font-weight="600" fill="#78716C" text-anchor="middle">予約</text>
+  </g>
+
+  <g id="nav-chat">
+    <text x="301" y="892" font-size="22" text-anchor="middle">💬</text>
+    <text x="301" y="918" font-family="system-ui" font-size="11" font-weight="600" fill="#78716C" text-anchor="middle">チャット</text>
+  </g>
+
+  <g id="nav-profile">
+    <text x="387" y="892" font-size="22" text-anchor="middle">👤</text>
+    <text x="387" y="918" font-family="system-ui" font-size="11" font-weight="600" fill="#78716C" text-anchor="middle">マイページ</text>
+  </g>
+
+  <defs>
+    <linearGradient id="statusGradient" x1="0" y1="0" x2="430" y2="0">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <linearGradient id="avatarGradient" x1="0" y1="0" x2="72" y2="72">
+      <stop offset="0%" stop-color="#FAF5FF"/>
+      <stop offset="100%" stop-color="#F3E8FF"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -1,344 +1,1721 @@
-<!doctype html>
-<html lang="ko">
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>K-Experience Match — 기획 와이어프레임</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>K-Experience — 韓国ビューティー体験マッチング</title>
   <style>
-    :root{
-      --bg:#f8f6fb; --paper:#fff; --ink:#18141f; --muted:#7c7490;
-      --primary:#7253f4; --soft:#f0ecff; --pink:#ff6b9d; --line:#ede8f7;
-      --ok:#13a660; --shadow:0 8px 24px rgba(50,30,100,.10);
-      --anno:#fff9e6; --annoBorder:#f0d060; --annoText:#7a5c00;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    *{box-sizing:border-box}
-    body{margin:0;background:linear-gradient(160deg,#ede8ff,#fff 28%);font-family:Inter,Pretendard,"Noto Sans JP",sans-serif;color:var(--ink);font-size:14px}
-    .wrap{max-width:1400px;margin:20px auto;padding:0 16px}
-    .top{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px}
-    .badge{display:inline-block;background:#ede8ff;color:#5638c9;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:700}
-    h1{margin:6px 0 0;font-size:24px;letter-spacing:-.02em}
-    .sub{font-size:12px;color:var(--muted)}
-    .layout{display:grid;grid-template-columns:240px 1fr;gap:14px;margin-top:12px}
-    .panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
-    .flows a{display:block;text-decoration:none;color:var(--ink);padding:9px 11px;border-radius:11px;font-weight:600;font-size:13px;border:1px solid transparent;margin-bottom:5px}
-    .flows a.on,.flows a:hover{background:#f5f2ff;border-color:#d9d0ff}
 
-    /* ── 3-column view: phone + annotation ── */
-    .view{display:grid;grid-template-columns:390px 1fr;gap:16px;align-items:start}
+    :root {
+      --primary: #8B5CF6;
+      --primary-dark: #7C3AED;
+      --secondary: #EC4899;
+      --accent: #F472B6;
+      --bg: #FAFAF9;
+      --surface: #FFFFFF;
+      --border: #E7E5E4;
+      --text: #1C1917;
+      --text-secondary: #78716C;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 4px 6px rgba(0,0,0,0.07);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    }
 
-    /* ── phone frame ── */
-    .phone{width:390px;border:10px solid #141019;border-radius:40px;overflow:hidden;box-shadow:0 24px 56px rgba(0,0,0,.20)}
-    .status{height:28px;background:#0d0b14;color:#fff;padding:6px 14px;font-size:12px;display:flex;justify-content:space-between}
-    .screen{height:710px;background:var(--bg);overflow-y:auto;overflow-x:hidden;position:relative}
-    .appHead{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
-    .appHead .title{font-size:16px;font-weight:700}
-    .appHead .sub{font-size:12px;color:var(--muted)}
-    .content{padding:12px}
-    .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px;margin-bottom:9px}
-    .hero{background:linear-gradient(135deg,var(--primary),#9b7ff8);color:#fff;border:none}
-    .s{font-size:12px;color:var(--muted)} .hero .s{color:#f0eaff}
-    .tag{display:inline-block;font-size:11px;font-weight:600;border-radius:999px;padding:4px 8px;background:var(--soft);color:#5c43d9;margin:2px 3px 2px 0}
-    .price{font-weight:800;color:#3d2a9c;font-size:13px}
-    .btn{border:0;border-radius:11px;padding:10px 14px;background:var(--primary);color:#fff;font-weight:700;font-size:13px;cursor:pointer}
-    .btn.soft{background:var(--soft);color:#5b40d6}
-    .btn.full{width:100%;display:block;margin-top:8px}
-    .input{width:100%;padding:10px 12px;border:1px solid #ddd7ee;border-radius:11px;background:#fff;font-size:13px;margin:5px 0 8px}
-    .split{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-    .row{display:flex;gap:8px;align-items:center} .between{justify-content:space-between}
-    .cats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:8px 0}
-    .cat-item{text-align:center;padding:10px 4px;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:11px;font-weight:600;cursor:pointer}
-    .cat-item .ico{font-size:22px;margin-bottom:4px}
-    .ex-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px;margin-bottom:9px;display:flex;gap:10px}
-    .avatar{width:60px;height:60px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;background:#e8e1fd}
-    .ex-info{flex:1}
-    .ex-name{font-weight:700;font-size:14px;margin-bottom:2px}
-    .ex-cat{font-size:11px;color:var(--primary);font-weight:600}
-    .star{color:#f4a800}
-    .tabbar{display:flex;background:#fff;border-top:1px solid var(--line)}
-    .tab{flex:1;text-align:center;padding:10px 4px;font-size:11px;color:#9a93ad}
-    .tab.on{color:#6242e8;font-weight:700}
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
 
-    /* ── annotation panel ── */
-    .anno-wrap{display:flex;flex-direction:column;gap:12px}
-    .anno-section{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-    .anno-head{background:#f5f2ff;padding:9px 12px;font-weight:700;font-size:13px;border-bottom:1px solid var(--line);color:#4432aa;display:flex;align-items:center;gap:6px}
-    .anno-items{padding:10px 12px;display:flex;flex-direction:column;gap:7px}
-    .anno-item{display:flex;gap:8px;align-items:flex-start}
-    .anno-num{min-width:20px;height:20px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0}
-    .anno-body{flex:1}
-    .anno-label{font-weight:700;font-size:13px;margin-bottom:2px}
-    .anno-desc{font-size:12px;color:#4a4460;line-height:1.55}
-    .anno-note{display:inline-block;background:var(--anno);border:1px solid var(--annoBorder);border-radius:6px;color:var(--annoText);font-size:11px;padding:3px 7px;margin-top:3px}
-    .ux-box{background:#f0fff8;border:1px solid #9fe8c7;border-radius:10px;padding:9px 11px;margin-top:4px;font-size:12px;color:#0a6640}
-    .tech-box{background:#f0f4ff;border:1px solid #b0c4ff;border-radius:10px;padding:9px 11px;margin-top:4px;font-size:12px;color:#1a3a8a}
+    /* App Container */
+    .app-container {
+      max-width: 430px;
+      margin: 0 auto;
+      background: var(--surface);
+      min-height: 100vh;
+      box-shadow: 0 0 40px rgba(0,0,0,0.1);
+      position: relative;
+    }
 
-    .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:12px}
-    .legend-item{display:flex;gap:5px;align-items:center;font-size:12px}
-    .dot{width:12px;height:12px;border-radius:3px}
+    /* Status Bar */
+    .status-bar {
+      height: 44px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
 
-    @media(max-width:980px){.layout{grid-template-columns:1fr}.view{grid-template-columns:1fr}.phone{margin:0 auto}}
+    /* Navigation */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .nav-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .icon-btn:hover {
+      background: var(--bg);
+    }
+
+    /* Content */
+    .content {
+      padding: 20px;
+      padding-bottom: 80px;
+    }
+
+    /* Search Bar */
+    .search-bar {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 16px 14px 44px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      background: var(--surface);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: var(--text-secondary);
+    }
+
+    /* Trust Banner */
+    .trust-banner {
+      background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+      border: 1px solid #FCD34D;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .trust-icon {
+      font-size: 28px;
+    }
+
+    .trust-text {
+      flex: 1;
+    }
+
+    .trust-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #92400E;
+      margin-bottom: 2px;
+    }
+
+    .trust-desc {
+      font-size: 12px;
+      color: #B45309;
+    }
+
+    /* Categories */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .section-link {
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .category-item {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .category-item:active {
+      transform: scale(0.95);
+      border-color: var(--primary);
+      background: #FAF5FF;
+    }
+
+    .category-icon {
+      font-size: 32px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .category-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Expert Card */
+    .expert-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .expert-card:active {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .expert-header {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .expert-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #FAF5FF, #F3E8FF);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      flex-shrink: 0;
+      border: 2px solid var(--border);
+    }
+
+    .expert-info {
+      flex: 1;
+    }
+
+    .expert-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .expert-category {
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .expert-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: #F59E0B;
+      font-weight: 600;
+    }
+
+    .expert-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .expert-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #FAF5FF;
+      color: var(--primary);
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .tag.verified {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+
+    .expert-price {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    /* Button */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:active {
+      background: var(--primary-dark);
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    /* Detail Screen */
+    .detail-hero {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      padding: 32px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .detail-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      margin: 0 auto 16px;
+      border: 3px solid rgba(255,255,255,0.3);
+    }
+
+    .detail-name {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .detail-category {
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 12px;
+    }
+
+    .detail-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .detail-tags {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .detail-tag {
+      background: rgba(255,255,255,0.2);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* Info Card */
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .info-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-card-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Portfolio Grid */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .portfolio-item {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, #FAF5FF, #F3E8FF);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      border: 1px solid var(--border);
+    }
+
+    /* Menu Item */
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .menu-info {
+      flex: 1;
+    }
+
+    .menu-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .menu-duration {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .menu-price {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* Review Item */
+    .review-item {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .review-item:last-child {
+      border-bottom: none;
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .review-author {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .review-date {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .review-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Progress Steps */
+    .progress-steps {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .progress-step {
+      flex: 1;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    .progress-step.active {
+      background: var(--primary);
+    }
+
+    .progress-step.completed {
+      background: var(--success);
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* Option Chips */
+    .option-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .option-chip {
+      padding: 10px 16px;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .option-chip.selected {
+      background: #FAF5FF;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Summary Card */
+    .summary-card {
+      background: #FAF5FF;
+      border: 1px solid #E9D5FF;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+    }
+
+    .summary-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .summary-value {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .summary-total {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 2px solid #E9D5FF;
+    }
+
+    .summary-total .summary-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 8px 0;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+      max-width: 430px;
+      margin: 0 auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 0;
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-icon {
+      font-size: 22px;
+    }
+
+    /* Hidden screens */
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-chip {
+      padding: 8px 14px;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .filter-chip.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Booking Confirmation */
+    .confirmation {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .confirmation-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+
+    .confirmation-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .confirmation-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    /* Responsive */
+    @media (min-width: 431px) {
+      .bottom-nav {
+        max-width: 430px;
+      }
+    }
   </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="top">
-    <div>
-      <span class="badge">기획 와이어프레임 v4 · 한국어 주석 포함</span>
-      <h1>K-Experience 매칭 플랫폼 — 화면 설계서</h1>
-    </div>
-    <div class="sub">일본인 관광객 타겟 · 메이크업/댄스/보컬/퍼스널컬러/가이드/의상/촬영</div>
-  </div>
-
-  <div class="legend">
-    <div class="legend-item"><div class="dot" style="background:#7253f4"></div> UI 컴포넌트</div>
-    <div class="legend-item"><div class="dot" style="background:#fff9e6;border:1px solid #f0d060"></div> 기획 의도</div>
-    <div class="legend-item"><div class="dot" style="background:#f0fff8;border:1px solid #9fe8c7"></div> UX 원칙</div>
-    <div class="legend-item"><div class="dot" style="background:#f0f4ff;border:1px solid #b0c4ff"></div> 개발 참고</div>
-  </div>
-
-  <div class="layout" style="margin-top:10px">
-    <aside class="panel">
-      <div style="font-weight:700;margin-bottom:8px;font-size:14px">📋 화면 목록</div>
-      <nav class="flows" id="flows"></nav>
-      <div style="margin-top:12px;padding:10px;background:#f8f5ff;border-radius:10px;font-size:12px;color:#4a3888">
-        <b>🎯 프로젝트 한 줄 정의</b><br/>
-        일본 관광객이 한국 전문가(메이크업·댄스·보컬·퍼스널컬러·가이드·의상·촬영)를 찾고, 상담하고, 예약하는 O2O 매칭 플랫폼
+  <div class="app-container">
+    <!-- Home Screen -->
+    <div class="screen active" id="screen-home">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>5G 🔋</span>
       </div>
-    </aside>
-    <section class="panel" id="main"></section>
-  </div>
-</div>
 
-<script>
-const experts=[
-  {id:1,name:'キム・ミンジ',nameKr:'김민지',cat:'메이크업',catJp:'メイクアップ',ico:'💄',rating:'4.9',reviews:234,area:'明洞',price:'¥8,000',lang:'JP·KR',avatar:'💄'},
-  {id:2,name:'イ・ジュン',nameKr:'이준',cat:'K-POPダンス',catJp:'ダンス',ico:'💃',rating:'5.0',reviews:89,area:'弘大',price:'¥12,000',lang:'JP·KR',avatar:'🕺'},
-  {id:3,name:'チェ・ユナ',nameKr:'최유나',cat:'보컬',catJp:'ボーカル',ico:'🎤',rating:'4.9',reviews:312,area:'ソウル全域',price:'¥10,000',lang:'JP·KR',avatar:'🎤'},
-  {id:4,name:'パク・ソヒ',nameKr:'박소희',cat:'퍼스널컬러',catJp:'パーソナルカラー',ico:'🎨',rating:'4.8',reviews:156,area:'江南',price:'¥15,000',lang:'JP·KR',avatar:'🎨'},
-  {id:5,name:'カン・ジウォン',nameKr:'강지원',cat:'가이드',catJp:'ガイド',ico:'🗺️',rating:'4.7',reviews:67,area:'ソウル全域',price:'¥18,000',lang:'JP·KR',avatar:'🗺️'},
-  {id:6,name:'ソン・ミナ',nameKr:'송미나',cat:'의상대여',catJp:'コスチューム',ico:'👘',rating:'4.8',reviews:198,area:'仁寺洞',price:'¥6,000',lang:'JP·KR',avatar:'👘'},
-  {id:7,name:'ユン・テヒ',nameKr:'윤태희',cat:'포토그래퍼',catJp:'フォト撮影',ico:'📸',rating:'4.9',reviews:421,area:'ソウル全域',price:'¥20,000',lang:'JP·KR',avatar:'📸'},
-];
-const cats=[
-  {ico:'💄',jp:'メイク',kr:'메이크업'},
-  {ico:'💃',jp:'ダンス',kr:'K-POP댄스'},
-  {ico:'🎤',jp:'ボーカル',kr:'보컬'},
-  {ico:'🎨',jp:'パーソナルカラー',kr:'퍼스널컬러'},
-  {ico:'🗺️',jp:'ガイド',kr:'가이드'},
-  {ico:'👘',jp:'コスチューム',kr:'의상대여'},
-  {ico:'📸',jp:'フォト',kr:'촬영'},
-  {ico:'＋',jp:'すべて',kr:'전체'},
-];
-function exCard(e){return`<div class='ex-card'><div class='avatar'>${e.avatar}</div><div class='ex-info'><div class='ex-name'>${e.name}</div><div class='ex-cat'>${e.catJp}</div><div class='s row' style='margin-top:3px'><span class='star'>★</span>${e.rating} (${e.reviews}件) · ${e.area}</div><div class='row between' style='margin-top:5px'><span class='tag'>${e.lang}</span><span class='price'>${e.price}〜</span></div></div></div>`;}
+      <div class="nav-bar">
+        <div>
+          <div class="nav-title">こんにちは！</div>
+          <div class="nav-subtitle">韓国体験を予約しよう</div>
+        </div>
+        <button class="icon-btn" onclick="showScreen('notifications')">🔔</button>
+      </div>
 
-const screens=[
-{id:'home',title:'1) 홈 화면',
-phoneHtml:`
-<div class='appHead'><div><div class='title'>こんにちは！</div><div class='sub'>韓国体験を予約しよう</div></div><span>🔔</span></div>
-<div class='content'>
-  <input class='input' placeholder='💬 体験・エキスパートを検索'>
-  <div class='card' style='padding:10px'>
-    <div class='s' style='margin-bottom:6px;font-weight:600'>カテゴリー</div>
-    <div class='cats'>${cats.map(c=>`<div class='cat-item'><div class='ico'>${c.ico}</div>${c.jp}</div>`).join('')}</div>
-  </div>
-  <div class='s' style='padding:0 2px 6px;font-weight:700'>おすすめエキスパート</div>
-  ${experts.slice(0,3).map(e=>exCard(e)).join('')}
-</div>`,
-tab:'home',
-anno:[
-  {n:1,label:'상단 GNB (글로벌 네비게이션 바)',desc:'왼쪽: 인사 문구(이름 개인화), 오른쪽: 알림 아이콘. 일본어 기본 표시.',note:'로그인 후 닉네임 반영'},
-  {n:2,label:'통합 검색창',desc:'전문가 이름, 체험 카테고리, 지역명을 한 번에 검색 가능. 탭하면 최근 검색어/자동완성 표시.',note:'UX: 입력 전 인기 키워드 노출 권장',ux:'검색은 앱 진입 후 가장 자주 쓰는 기능. 상단 고정 필수.'},
-  {n:3,label:'카테고리 그리드',desc:'7가지 체험 카테고리를 아이콘+이름으로 2×4 그리드 배치. 탭 시 해당 카테고리 전문가 리스트로 이동.',note:'7개 카테고리: 메이크업/댄스/보컬/퍼스널컬러/가이드/의상/촬영',ux:'일본 사용자: 카테고리 아이콘이 언어 장벽 없이 직관적 진입 유도'},
-  {n:4,label:'추천 전문가 카드 리스트',desc:'아바타/이름/카테고리/별점+리뷰수/지역/언어지원/시작가격을 한 카드에 표시.',note:'개인화 추천 또는 인기순 기본 정렬',tech:'추천 알고리즘: 체류 지역 + 관심 카테고리 기반'}
-]},
+      <div class="content">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" placeholder="メイクアップ、ダンス、エキスパート名で検索">
+        </div>
 
-{id:'list',title:'2) 검색/리스트',
-phoneHtml:`
-<div class='appHead'><div class='title'>ダンス講師を探す</div><span class='tag'>필터</span></div>
-<div class='content'>
-  <div><span class='tag' style='background:#7253f4;color:#fff'>💃 ダンス</span><span class='tag'>江南</span><span class='tag'>¥〜15,000</span><span class='tag'>日本語対応</span></div>
-  <div class='s' style='margin:8px 0 4px'>7명의 전문가</div>
-  ${experts.map(e=>exCard(e)).join('')}
-</div>`,
-tab:'list',
-anno:[
-  {n:1,label:'활성 필터 칩',desc:'선택된 필터가 보라색 강조 칩으로 표시. X 버튼으로 개별 해제 가능.',note:'필터 항목: 카테고리 / 지역 / 가격대 / 언어지원'},
-  {n:2,label:'검색 결과 수',desc:'"7명의 전문가" — 현재 필터 기준 결과 수를 명시. 0건일 경우 대안 추천 UI 노출.',ux:'결과 수 표시는 사용자의 탐색 피로 감소에 효과적'},
-  {n:3,label:'전문가 카드',desc:'세로 스크롤 리스트. 카드 탭 시 해당 전문가 상세 페이지로 이동. 사진/이름/전공/평점/지역/언어/가격 고정 표시.',note:'카드 높이 균일 유지 → 비교 스트레스 감소',tech:'무한스크롤 또는 페이지네이션 20개 단위 권장'}
-]},
+        <div class="trust-banner">
+          <span class="trust-icon">✓</span>
+          <div class="trust-text">
+            <div class="trust-title">安心の日本語サポート</div>
+            <div class="trust-desc">全てのエキスパートが日本語対応可能</div>
+          </div>
+        </div>
 
-{id:'profile',title:'3) 전문가 프로필',
-phoneHtml:`
-<div class='appHead'><div class='title'>エキスパート詳細</div></div>
-<div class='content'>
-  <div style='text-align:center;padding:16px 0 10px'>
-    <div style='font-size:56px'>💃</div>
-    <div style='font-weight:700;font-size:18px;margin:4px 0 2px'>イ・ジュン</div>
-    <div style='color:var(--primary);font-weight:600;font-size:13px'>K-POPダンスインストラクター</div>
-    <div class='s' style='margin:4px 0'><span class='star'>★</span>5.0 (89件) · 弘大、ソウル</div>
-    <span class='tag'>日本語OK</span><span class='tag'>韓国語</span>
-  </div>
-  <div class='card'><b>自己紹介</b><p class='s'>K-POPグループの振り付けを1対1でレクチャー。初心者でも安心。楽しく学べる環境を大切にしています。</p></div>
-  <div class='card'><b>メニュー & 料金</b>
-    <div class='row between' style='margin-top:7px'><span class='s'>1回レッスン (60分)</span><span class='price'>¥12,000</span></div>
-    <div class='row between' style='margin:5px 0'><span class='s'>3回パック</span><span class='price'>¥30,000</span></div>
-    <div class='row between'><span class='s'>カップル/グループ +1名</span><span class='price'>+¥5,000</span></div>
-  </div>
-  <div class='card'><b>レビュー ★5.0</b><p class='s'>「振り付けが丁寧で楽しかったです！日本語でしっかり説明してくれました。」— ゆりか</p></div>
-  <div class='split' style='margin-top:4px'><button class='btn soft'>相談する</button><button class='btn'>予約に進む</button></div>
-</div>`,
-tab:'profile',
-anno:[
-  {n:1,label:'전문가 헤더 (사진+이름+카테고리)',desc:'전문가 대표 사진(실제 서비스에서는 고화질 프로필 이미지), 이름, 전문 분야, 별점, 활동 지역을 최상단 집약.',note:'신뢰 구축의 핵심 구역 — 첫 3초 인상 결정',ux:'사진 품질이 예약 전환율에 직결. 전문가 사진 가이드라인 필요'},
-  {n:2,label:'언어 지원 배지',desc:'日本語OK 배지를 이름 바로 아래 배치 → 일본 사용자의 첫 번째 불안 즉시 해소.',note:'언어 배지는 검색 필터와 연동'},
-  {n:3,label:'메뉴 & 요금표',desc:'메뉴별 소요시간/가격을 테이블 형식으로 나열. 옵션 추가 비용도 명시.',note:'가격 투명성: 바비톡/강남언니의 핵심 신뢰 요소',tech:'가격은 전문가가 어드민에서 직접 설정'},
-  {n:4,label:'리뷰 섹션',desc:'최신 리뷰 3건 기본 노출 → "더 보기" 확장. 별점 평균 + 총 리뷰 수 표시.',ux:'일본 사용자는 리뷰 의존도 높음 — 일본어 리뷰 우선 노출 로직 필요'},
-  {n:5,label:'이중 CTA 버튼',desc:'"상담하기(채팅 진입)" + "예약하기" 두 버튼을 나란히. 부담 없이 먼저 상담 가능.',note:'상담→예약 전환율이 직접 예약 전환율보다 높을 것으로 예상'}
-]},
+        <div class="section-header">
+          <h2 class="section-title">カテゴリー</h2>
+          <a href="#" class="section-link">すべて見る</a>
+        </div>
 
-{id:'booking',title:'4) 예약 폼',
-phoneHtml:`
-<div class='appHead'><div class='title'>予約</div><div class='s'>STEP 1/3</div></div>
-<div class='content'>
-  <div style='display:flex;gap:6px;margin-bottom:12px'>
-    <div style='flex:1;height:4px;border-radius:4px;background:var(--primary)'></div>
-    <div style='flex:1;height:4px;border-radius:4px;background:var(--line)'></div>
-    <div style='flex:1;height:4px;border-radius:4px;background:var(--line)'></div>
-  </div>
-  <div class='card'>
-    <div class='s'>레슨 날짜</div><input class='input' value='2026-04-30'>
-    <div class='s'>시간</div><input class='input' value='14:00 〜 15:00'>
-    <div class='s'>인원</div>
-    <div class='split'><button class='btn soft'>1명</button><button class='btn'>2명</button></div>
-  </div>
-  <div class='card'>
-    <div class='s'>추가 옵션</div>
-    <div style='margin-top:7px'><span class='tag'>안무 영상 제공 +¥2,000</span></div>
-    <div style='margin-top:5px'><span class='tag'>의상 대여 추가 +¥5,000</span></div>
-  </div>
-  <p class='s' style='padding:0 2px;text-align:center'>※ 아직 예약이 확정되지 않았습니다</p>
-  <button class='btn full'>다음 단계 (요금 확인)</button>
-</div>`,
-tab:'booking',
-anno:[
-  {n:1,label:'3단계 진행 표시바',desc:'예약 흐름을 날짜선택→옵션→결제 3단계로 시각화. 현재 단계 강조.',ux:'진행 표시는 이탈률 감소에 효과적 — 사용자가 "얼마나 남았는지" 인지'},
-  {n:2,label:'날짜/시간 입력',desc:'캘린더 팝업 또는 바텀시트 선택 UI. 전문가 가용 시간만 선택 가능하도록.',note:'전문가 캘린더 연동 필요 (어드민에서 일정 블록)',tech:'Google Calendar API 또는 자체 스케줄러 구현'},
-  {n:3,label:'인원 선택 버튼',desc:'1명/2명/그룹(3+) 버튼형 선택. 인원에 따라 가격 자동 계산.',ux:'드롭다운 대신 버튼형 → 탭 조작 1회 완료'},
-  {n:4,label:'추가 옵션 칩',desc:'전문가가 설정한 부가 서비스를 선택형 칩으로 노출. 선택 시 금액에 자동 반영.',note:'옵션 추가로 단가 상승 유도 (upsell)'},
-  {n:5,label:'안심 문구',desc:'"아직 예약이 확정되지 않았습니다" — 결제 전 심리적 부담 제거.',ux:'일본 사용자는 실수에 민감 → 취소/확정 시점 명확화 필수'}
-]},
+        <div class="categories">
+          <div class="category-item" onclick="showScreen('list')">
+            <span class="category-icon">💄</span>
+            <div class="category-name">メイク</div>
+          </div>
+          <div class="category-item" onclick="showScreen('list')">
+            <span class="category-icon">💃</span>
+            <div class="category-name">ダンス</div>
+          </div>
+          <div class="category-item" onclick="showScreen('list')">
+            <span class="category-icon">🎤</span>
+            <div class="category-name">ボーカル</div>
+          </div>
+          <div class="category-item" onclick="showScreen('list')">
+            <span class="category-icon">🎨</span>
+            <div class="category-name">カラー診断</div>
+          </div>
+          <div class="category-item" onclick="showScreen('list')">
+            <span class="category-icon">🗺️</span>
+            <div class="category-name">ガイド</div>
+          </div>
+          <div class="category-item" onclick="showScreen('list')">
+            <span class="category-icon">👘</span>
+            <div class="category-name">衣装</div>
+          </div>
+          <div class="category-item" onclick="showScreen('list')">
+            <span class="category-icon">📸</span>
+            <div class="category-name">撮影</div>
+          </div>
+          <div class="category-item" onclick="showScreen('list')">
+            <span class="category-icon">✨</span>
+            <div class="category-name">すべて</div>
+          </div>
+        </div>
 
-{id:'payment',title:'5) 결제',
-phoneHtml:`
-<div class='appHead'><div class='title'>결제하기</div><div class='s'>STEP 3/3</div></div>
-<div class='content'>
-  <div style='display:flex;gap:6px;margin-bottom:12px'>
-    <div style='flex:1;height:4px;border-radius:4px;background:var(--ok)'></div>
-    <div style='flex:1;height:4px;border-radius:4px;background:var(--ok)'></div>
-    <div style='flex:1;height:4px;border-radius:4px;background:var(--primary)'></div>
-  </div>
-  <div class='card'>
-    <div class='s' style='font-weight:700;margin-bottom:8px'>예약 내용 확인</div>
-    <div class='s'>이준 · K-POP 댄스 60분</div>
-    <div class='s'>4/30 14:00 · 2명 · 홍대</div>
-  </div>
-  <div class='card'>
-    <div class='row between'><span class='s'>레슨 요금</span><b>¥24,000</b></div>
-    <div class='row between'><span class='s'>영상 제공 옵션</span><b>¥2,000</b></div>
-    <div class='row between'><span class='s'>서비스 수수료</span><b>¥1,300</b></div>
-    <hr style='border:none;border-top:1px solid var(--line);margin:9px 0'>
-    <div class='row between'><b>합계</b><b style='color:#3d2a9c;font-size:15px'>¥27,300</b></div>
-  </div>
-  <button class='btn full'>카드로 결제하기</button>
-  <button class='btn soft full'>Apple Pay / Google Pay</button>
-</div>`,
-tab:'booking',
-anno:[
-  {n:1,label:'예약 내용 요약 카드',desc:'결제 전 선택한 전문가/메뉴/날짜/인원을 최종 확인. 이 화면에서 되돌아가기 가능.',note:'바비톡/강남언니처럼 결제 직전 내용 재확인 필수'},
-  {n:2,label:'요금 투명 내역',desc:'레슨 요금, 옵션, 플랫폼 수수료를 각 항목별로 분리 표시. 합계는 굵게 강조.',ux:'일본 사용자는 숨겨진 비용에 매우 민감 → 투명한 내역 표시가 신뢰 핵심'},
-  {n:3,label:'결제 수단 선택',desc:'카드 결제(기본) + Apple Pay / Google Pay 제공. 해외 카드(Visa/Master) 지원 필수.',tech:'결제 PG: Portone(아임포트) 또는 Stripe 권장 — 해외 카드 처리',note:'JPY 표시 기본, 원화 환율 안내 옵션'}
-]},
+        <div class="section-header">
+          <h2 class="section-title">おすすめエキスパート</h2>
+          <a href="#" class="section-link">もっと見る</a>
+        </div>
 
-{id:'chat',title:'6) 상담 채팅',
-phoneHtml:`
-<div class='appHead'><div class='row between'><div class='title'>💬 이준 강사님</div><span class='tag'>🔄 자동번역 ON</span></div></div>
-<div class='content'>
-  <div class='card s'>이준: レッスンについてご質問があればなんでもどうぞ！日本語で対応します。</div>
-  <div class='card s' style='background:#f5f2ff;border-color:#d9d0ff'>손님: グループで参加できますか？</div>
-  <div class='card s'>이준: はい、2〜4名まで対応可能です。グループ割もあります😊</div>
-  <div class='card'>
-    <div class='s' style='font-weight:600;margin-bottom:7px'>자주 묻는 질문</div>
-    <span class='tag'>소요시간은?</span><span class='tag'>초보자도 OK?</span><span class='tag'>당일 예약?</span><span class='tag'>통역 비용?</span>
-  </div>
-  <div class='row' style='gap:7px'>
-    <input class='input' style='margin:0;flex:1' placeholder='메시지를 입력하세요'>
-    <button class='btn' style='padding:10px 14px'>전송</button>
-  </div>
-</div>`,
-tab:'chat',
-anno:[
-  {n:1,label:'자동번역 토글',desc:'JP↔KR 실시간 번역 상태를 헤더에 상시 표시. 탭하면 ON/OFF 전환.',tech:'DeepL API 또는 Google Translate API 연동',ux:'번역이 켜져있다는 시각적 안심감이 대화 시작 허들을 낮춤'},
-  {n:2,label:'채팅 말풍선 구분',desc:'전문가 메시지: 흰 배경 좌측 / 손님 메시지: 보라 배경 우측 정렬.',note:'원문+번역문을 함께 표시하는 옵션 2차 기능 고려'},
-  {n:3,label:'자주 묻는 질문 퀵버튼',desc:'입력 부담 없이 자주 묻는 질문을 버튼 한 번으로 전송. 전문가별 커스터마이징 가능.',ux:'일본 사용자는 외국어 타이핑 자체를 부담스러워함 → 템플릿 버튼 효과 큼'},
-  {n:4,label:'텍스트 입력 영역',desc:'키보드 올라올 때 채팅창 자동 스크롤. 이미지/사진 첨부 2차 기능.',tech:'WebSocket 실시간 통신 구현 필요'}
-]},
+        <div class="expert-card" onclick="showScreen('detail')">
+          <div class="expert-header">
+            <div class="expert-avatar">💄</div>
+            <div class="expert-info">
+              <div class="expert-name">キム・ミンジ</div>
+              <div class="expert-category">メイクアップアーティスト</div>
+              <div class="expert-meta">
+                <span class="rating">★ 4.9</span>
+                <span>•</span>
+                <span>234件のレビュー</span>
+              </div>
+            </div>
+          </div>
+          <div class="expert-details">
+            <div class="expert-tags">
+              <span class="tag verified">日本語OK</span>
+              <span class="tag">明洞エリア</span>
+            </div>
+            <div class="expert-price">¥8,000〜</div>
+          </div>
+        </div>
 
-{id:'mypage',title:'7) 마이페이지',
-phoneHtml:`
-<div class='appHead'><div class='title'>마이페이지</div></div>
-<div class='content'>
-  <div class='card hero'>
-    <div class='s'>다음 예약</div>
-    <b>K-POP 댄스 1:1 레슨</b>
-    <p class='s'>4/30 14:00 · 이준 강사 · 홍대</p>
-    <span class='tag' style='background:rgba(255,255,255,.2);color:#fff'>예약 확정 ✓</span>
-  </div>
-  <div class='s' style='padding:2px 2px 6px;font-weight:700'>이전 체험</div>
-  ${experts.slice(0,2).map(e=>`<div class='ex-card'><div class='avatar'>${e.avatar}</div><div class='ex-info'><div class='ex-name'>${e.name} · ${e.catJp}</div><div class='s'>체험 완료</div><button class='btn soft' style='margin-top:5px;padding:6px 10px;font-size:11px'>리뷰 작성하기</button></div></div>`).join('')}
-  <div class='card' style='margin-top:4px'><b>고객센터</b><p class='s'>24시간 일본어 채팅 지원</p></div>
-</div>`,
-tab:'mypage',
-anno:[
-  {n:1,label:'다음 예약 히어로 카드',desc:'가장 임박한 예약을 최상단 강조 카드로 배치. 날짜/시간/전문가/장소 + 확정 상태 표시.',ux:'예약 후 설레임 유지 → 재예약/리뷰 전환율 상승',note:'D-2 이하이면 "준비물 안내" 푸시 알림 발송 권장'},
-  {n:2,label:'이전 체험 리스트',desc:'완료된 체험 목록 + 리뷰 작성 CTA. 리뷰 미작성 시 배지 강조.',ux:'리뷰는 플랫폼 신뢰 자산 — 작성 유도 UX 중요',tech:'리뷰 작성 완료 시 포인트/쿠폰 지급 고려'},
-  {n:3,label:'고객센터 진입',desc:'일본어 지원 고객센터 링크 항상 노출. 카카오채널 또는 인앱 채팅.',note:'24시간 대응 가능 여부 명시 필요'}
-]}
-];
+        <div class="expert-card" onclick="showScreen('detail')">
+          <div class="expert-header">
+            <div class="expert-avatar">💃</div>
+            <div class="expert-info">
+              <div class="expert-name">イ・ジュン</div>
+              <div class="expert-category">K-POPダンスインストラクター</div>
+              <div class="expert-meta">
+                <span class="rating">★ 5.0</span>
+                <span>•</span>
+                <span>89件のレビュー</span>
+              </div>
+            </div>
+          </div>
+          <div class="expert-details">
+            <div class="expert-tags">
+              <span class="tag verified">日本語OK</span>
+              <span class="tag">弘大エリア</span>
+            </div>
+            <div class="expert-price">¥12,000〜</div>
+          </div>
+        </div>
 
-const flows=document.getElementById('flows'), main=document.getElementById('main');
-function annoHtml(a){
-  let h=`<div class='anno-item'><div class='anno-num'>${a.n}</div><div class='anno-body'><div class='anno-label'>${a.label}</div><div class='anno-desc'>${a.desc}</div>`;
-  if(a.note) h+=`<span class='anno-note'>📌 ${a.note}</span>`;
-  if(a.ux) h+=`<div class='ux-box'>💚 UX 원칙: ${a.ux}</div>`;
-  if(a.tech) h+=`<div class='tech-box'>🔧 개발 참고: ${a.tech}</div>`;
-  h+=`</div></div>`;
-  return h;
-}
-function render(id){
-  const s=screens.find(x=>x.id===id)||screens[0];
-  flows.innerHTML=screens.map(x=>`<a href='#${x.id}' class='${x.id===s.id?'on':''}'>${x.title}</a>`).join('');
-  main.innerHTML=`<div class='view'>
-    <div class='phone'>
-      <div class='status'><span>9:41</span><span>5G 🔋</span></div>
-      <div class='screen'>${s.phoneHtml}</div>
-      <div class='tabbar'>
-        <div class='tab ${s.tab==='home'||s.tab==='list'?'on':''}'>🏠 Home</div>
-        <div class='tab ${s.tab==='profile'?'on':''}'>👤 Profile</div>
-        <div class='tab ${s.tab==='booking'?'on':''}'>📅 Booking</div>
-        <div class='tab ${s.tab==='chat'?'on':''}'>💬 Chat</div>
-        <div class='tab ${s.tab==='mypage'?'on':''}'>⚙️ My</div>
+        <div class="expert-card" onclick="showScreen('detail')">
+          <div class="expert-header">
+            <div class="expert-avatar">🎨</div>
+            <div class="expert-info">
+              <div class="expert-name">パク・ソヒ</div>
+              <div class="expert-category">パーソナルカラーアナリスト</div>
+              <div class="expert-meta">
+                <span class="rating">★ 4.8</span>
+                <span>•</span>
+                <span>156件のレビュー</span>
+              </div>
+            </div>
+          </div>
+          <div class="expert-details">
+            <div class="expert-tags">
+              <span class="tag verified">日本語OK</span>
+              <span class="tag">江南エリア</span>
+            </div>
+            <div class="expert-price">¥15,000〜</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <div class="nav-item active">
+          <span class="nav-icon">🏠</span>
+          <span>ホーム</span>
+        </div>
+        <div class="nav-item" onclick="showScreen('list')">
+          <span class="nav-icon">🔍</span>
+          <span>探す</span>
+        </div>
+        <div class="nav-item" onclick="showScreen('bookings')">
+          <span class="nav-icon">📅</span>
+          <span>予約</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">💬</span>
+          <span>チャット</span>
+        </div>
+        <div class="nav-item" onclick="showScreen('profile')">
+          <span class="nav-icon">👤</span>
+          <span>マイページ</span>
+        </div>
       </div>
     </div>
-    <div class='anno-wrap'>
-      <div class='anno-section'>
-        <div class='anno-head'>📝 화면 설명 — ${s.title}</div>
-        <div class='anno-items'>${s.anno.map(a=>annoHtml(a)).join('')}</div>
+
+    <!-- List Screen -->
+    <div class="screen" id="screen-list">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>5G 🔋</span>
+      </div>
+
+      <div class="nav-bar">
+        <button class="icon-btn" onclick="showScreen('home')">←</button>
+        <div class="nav-title">メイクアップ</div>
+        <button class="icon-btn">⚙️</button>
+      </div>
+
+      <div class="content">
+        <div class="filter-bar">
+          <div class="filter-chip active">すべて</div>
+          <div class="filter-chip">明洞</div>
+          <div class="filter-chip">江南</div>
+          <div class="filter-chip">弘大</div>
+          <div class="filter-chip">¥10,000以下</div>
+          <div class="filter-chip">日本語対応</div>
+        </div>
+
+        <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">
+          12人のエキスパートが見つかりました
+        </div>
+
+        <div class="expert-card" onclick="showScreen('detail')">
+          <div class="expert-header">
+            <div class="expert-avatar">💄</div>
+            <div class="expert-info">
+              <div class="expert-name">キム・ミンジ</div>
+              <div class="expert-category">メイクアップアーティスト</div>
+              <div class="expert-meta">
+                <span class="rating">★ 4.9</span>
+                <span>•</span>
+                <span>234件</span>
+                <span>•</span>
+                <span>明洞</span>
+              </div>
+            </div>
+          </div>
+          <div class="expert-details">
+            <div class="expert-tags">
+              <span class="tag verified">日本語OK</span>
+              <span class="tag">韓国語</span>
+            </div>
+            <div class="expert-price">¥8,000〜</div>
+          </div>
+        </div>
+
+        <div class="expert-card" onclick="showScreen('detail')">
+          <div class="expert-header">
+            <div class="expert-avatar">💄</div>
+            <div class="expert-info">
+              <div class="expert-name">チョン・ユジン</div>
+              <div class="expert-category">ブライダルメイク専門</div>
+              <div class="expert-meta">
+                <span class="rating">★ 4.9</span>
+                <span>•</span>
+                <span>187件</span>
+                <span>•</span>
+                <span>江南</span>
+              </div>
+            </div>
+          </div>
+          <div class="expert-details">
+            <div class="expert-tags">
+              <span class="tag verified">日本語OK</span>
+              <span class="tag">英語</span>
+            </div>
+            <div class="expert-price">¥12,000〜</div>
+          </div>
+        </div>
+
+        <div class="expert-card" onclick="showScreen('detail')">
+          <div class="expert-header">
+            <div class="expert-avatar">💄</div>
+            <div class="expert-info">
+              <div class="expert-name">ユン・ソラ</div>
+              <div class="expert-category">K-ビューティーメイク</div>
+              <div class="expert-meta">
+                <span class="rating">★ 4.8</span>
+                <span>•</span>
+                <span>143件</span>
+                <span>•</span>
+                <span>弘大</span>
+              </div>
+            </div>
+          </div>
+          <div class="expert-details">
+            <div class="expert-tags">
+              <span class="tag verified">日本語OK</span>
+            </div>
+            <div class="expert-price">¥9,500〜</div>
+          </div>
+        </div>
+
+        <div class="expert-card" onclick="showScreen('detail')">
+          <div class="expert-header">
+            <div class="expert-avatar">💄</div>
+            <div class="expert-info">
+              <div class="expert-name">カン・ヘウォン</div>
+              <div class="expert-category">ステージメイク</div>
+              <div class="expert-meta">
+                <span class="rating">★ 5.0</span>
+                <span>•</span>
+                <span>92件</span>
+                <span>•</span>
+                <span>明洞</span>
+              </div>
+            </div>
+          </div>
+          <div class="expert-details">
+            <div class="expert-tags">
+              <span class="tag verified">日本語OK</span>
+              <span class="tag">中国語</span>
+            </div>
+            <div class="expert-price">¥10,500〜</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')">
+          <span class="nav-icon">🏠</span>
+          <span>ホーム</span>
+        </div>
+        <div class="nav-item active">
+          <span class="nav-icon">🔍</span>
+          <span>探す</span>
+        </div>
+        <div class="nav-item" onclick="showScreen('bookings')">
+          <span class="nav-icon">📅</span>
+          <span>予約</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">💬</span>
+          <span>チャット</span>
+        </div>
+        <div class="nav-item" onclick="showScreen('profile')">
+          <span class="nav-icon">👤</span>
+          <span>マイページ</span>
+        </div>
       </div>
     </div>
-  </div>`;
-}
-window.addEventListener('hashchange',()=>render(location.hash.slice(1)));
-render(location.hash.slice(1)||'home');
-</script>
+
+    <!-- Detail Screen -->
+    <div class="screen" id="screen-detail">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>5G 🔋</span>
+      </div>
+
+      <div class="detail-hero">
+        <button class="icon-btn" onclick="showScreen('list')" style="position: absolute; left: 12px; top: 52px; color: white;">←</button>
+        <button class="icon-btn" style="position: absolute; right: 12px; top: 52px; color: white;">♡</button>
+        <div class="detail-avatar">💄</div>
+        <div class="detail-name">キム・ミンジ</div>
+        <div class="detail-category">メイクアップアーティスト</div>
+        <div class="detail-rating">
+          <span>★ 4.9</span>
+          <span>•</span>
+          <span>234件のレビュー</span>
+          <span>•</span>
+          <span>明洞</span>
+        </div>
+        <div class="detail-tags">
+          <span class="detail-tag">日本語OK</span>
+          <span class="detail-tag">韓国語</span>
+          <span class="detail-tag">英語</span>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="info-card">
+          <div class="info-card-title">
+            <span>✨</span>
+            <span>自己紹介</span>
+          </div>
+          <div class="info-card-text">
+            K-ビューティーのトレンドを取り入れた、自然で上品なメイクを得意としています。お客様一人ひとりの魅力を最大限に引き出すメイクを心がけています。日本のお客様も多数対応しており、安心してご相談ください。
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">
+            <span>📸</span>
+            <span>ポートフォリオ</span>
+          </div>
+          <div class="portfolio-grid">
+            <div class="portfolio-item">💄</div>
+            <div class="portfolio-item">✨</div>
+            <div class="portfolio-item">💋</div>
+            <div class="portfolio-item">🌸</div>
+            <div class="portfolio-item">👁️</div>
+            <div class="portfolio-item">💫</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">
+            <span>💰</span>
+            <span>メニュー・料金</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-info">
+              <div class="menu-name">ナチュラルメイク</div>
+              <div class="menu-duration">60分</div>
+            </div>
+            <div class="menu-price">¥8,000</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-info">
+              <div class="menu-name">フルメイク（ヘアセット込み）</div>
+              <div class="menu-duration">90分</div>
+            </div>
+            <div class="menu-price">¥15,000</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-info">
+              <div class="menu-name">ブライダル・特別イベント</div>
+              <div class="menu-duration">120分</div>
+            </div>
+            <div class="menu-price">¥25,000</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">
+            <span>⭐</span>
+            <span>レビュー（234件）</span>
+          </div>
+          <div class="review-item">
+            <div class="review-header">
+              <div class="review-author">
+                <span class="rating">★★★★★</span>
+                <span style="margin-left: 8px;">ゆりか</span>
+              </div>
+              <div class="review-date">2週間前</div>
+            </div>
+            <div class="review-text">
+              初めての韓国メイクでしたが、とても丁寧に説明してくださり、仕上がりも完璧でした！日本語も堪能で安心して任せられました。また次回も予約したいです。
+            </div>
+          </div>
+          <div class="review-item">
+            <div class="review-header">
+              <div class="review-author">
+                <span class="rating">★★★★★</span>
+                <span style="margin-left: 8px;">さやか</span>
+              </div>
+              <div class="review-date">1ヶ月前</div>
+            </div>
+            <div class="review-text">
+              友達と一緒に予約しました。二人とも大満足の仕上がりで、写真もたくさん撮れて最高の思い出になりました！
+            </div>
+          </div>
+          <div class="review-item">
+            <div class="review-header">
+              <div class="review-author">
+                <span class="rating">★★★★★</span>
+                <span style="margin-left: 8px;">まい</span>
+              </div>
+              <div class="review-date">2ヶ月前</div>
+            </div>
+            <div class="review-text">
+              プロの技術に感動しました。自分に似合うメイクを提案してくださり、韓国コスメの使い方も教えてもらえました。
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-secondary">相談する</button>
+          <button class="btn btn-primary" onclick="showScreen('booking-1')">予約する</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking Step 1: Date Selection -->
+    <div class="screen" id="screen-booking-1">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>5G 🔋</span>
+      </div>
+
+      <div class="nav-bar">
+        <button class="icon-btn" onclick="showScreen('detail')">←</button>
+        <div>
+          <div class="nav-title">予約する</div>
+          <div class="nav-subtitle">ステップ 1/3</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="content">
+        <div class="progress-steps">
+          <div class="progress-step active"></div>
+          <div class="progress-step"></div>
+          <div class="progress-step"></div>
+        </div>
+
+        <div class="info-card" style="background: #FAF5FF;">
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <div style="font-size: 36px;">💄</div>
+            <div>
+              <div style="font-weight: 700; margin-bottom: 2px;">キム・ミンジ</div>
+              <div style="font-size: 13px; color: var(--text-secondary);">ナチュラルメイク（60分）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">日付を選択</label>
+          <input type="date" class="form-input" value="2026-04-15">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">時間を選択</label>
+          <div class="option-chips">
+            <div class="option-chip">10:00</div>
+            <div class="option-chip selected">11:00</div>
+            <div class="option-chip">13:00</div>
+            <div class="option-chip">14:00</div>
+            <div class="option-chip">15:00</div>
+            <div class="option-chip">16:00</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">人数</label>
+          <div class="form-grid">
+            <div class="option-chip selected">1名</div>
+            <div class="option-chip">2名</div>
+          </div>
+        </div>
+
+        <div style="background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 12px; padding: 16px; margin: 24px 0; font-size: 13px; color: #92400E;">
+          <div style="font-weight: 700; margin-bottom: 4px;">📌 予約について</div>
+          この時点ではまだ予約は確定されません。次のステップで内容を確認し、支払いを完了すると予約が確定します。
+        </div>
+
+        <button class="btn btn-primary" onclick="showScreen('booking-2')">次へ（内容確認）</button>
+      </div>
+    </div>
+
+    <!-- Booking Step 2: Confirmation -->
+    <div class="screen" id="screen-booking-2">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>5G 🔋</span>
+      </div>
+
+      <div class="nav-bar">
+        <button class="icon-btn" onclick="showScreen('booking-1')">←</button>
+        <div>
+          <div class="nav-title">予約内容の確認</div>
+          <div class="nav-subtitle">ステップ 2/3</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="content">
+        <div class="progress-steps">
+          <div class="progress-step completed"></div>
+          <div class="progress-step active"></div>
+          <div class="progress-step"></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">
+            <span>📅</span>
+            <span>予約詳細</span>
+          </div>
+          <div style="margin-top: 12px;">
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+              <span style="font-size: 13px; color: var(--text-secondary);">エキスパート</span>
+              <span style="font-weight: 600; font-size: 14px;">キム・ミンジ</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+              <span style="font-size: 13px; color: var(--text-secondary);">メニュー</span>
+              <span style="font-weight: 600; font-size: 14px;">ナチュラルメイク</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+              <span style="font-size: 13px; color: var(--text-secondary);">日時</span>
+              <span style="font-weight: 600; font-size: 14px;">4月15日 11:00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+              <span style="font-size: 13px; color: var(--text-secondary);">人数</span>
+              <span style="font-weight: 600; font-size: 14px;">1名</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+              <span style="font-size: 13px; color: var(--text-secondary);">所要時間</span>
+              <span style="font-weight: 600; font-size: 14px;">60分</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">
+            <span>🎁</span>
+            <span>オプション追加（任意）</span>
+          </div>
+          <div class="option-chips">
+            <div class="option-chip">ヘアセット +¥3,000</div>
+            <div class="option-chip">まつエク +¥5,000</div>
+            <div class="option-chip">写真撮影 +¥8,000</div>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-row">
+            <span class="summary-label">ナチュラルメイク × 1名</span>
+            <span class="summary-value">¥8,000</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">サービス料</span>
+            <span class="summary-value">¥800</span>
+          </div>
+          <div class="summary-row summary-total">
+            <span class="summary-label" style="font-weight: 700; color: var(--text);">合計</span>
+            <span class="summary-value">¥8,800</span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="showScreen('booking-3')">支払いへ進む</button>
+      </div>
+    </div>
+
+    <!-- Booking Step 3: Payment -->
+    <div class="screen" id="screen-booking-3">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>5G 🔋</span>
+      </div>
+
+      <div class="nav-bar">
+        <button class="icon-btn" onclick="showScreen('booking-2')">←</button>
+        <div>
+          <div class="nav-title">お支払い</div>
+          <div class="nav-subtitle">ステップ 3/3</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="content">
+        <div class="progress-steps">
+          <div class="progress-step completed"></div>
+          <div class="progress-step completed"></div>
+          <div class="progress-step active"></div>
+        </div>
+
+        <div class="summary-card">
+          <div style="text-align: center; margin-bottom: 16px;">
+            <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;">お支払い金額</div>
+            <div style="font-size: 32px; font-weight: 800; color: var(--primary);">¥8,800</div>
+          </div>
+          <div style="border-top: 2px solid #E9D5FF; padding-top: 12px; font-size: 12px; color: var(--text-secondary);">
+            キム・ミンジ • ナチュラルメイク<br>
+            4月15日（火）11:00 • 明洞
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">
+            <span>💳</span>
+            <span>お支払い方法</span>
+          </div>
+          <div style="margin-top: 12px;">
+            <button class="btn btn-primary" style="margin-bottom: 12px;" onclick="showScreen('confirmation')">
+              クレジットカードで支払う
+            </button>
+            <button class="btn btn-secondary" style="margin-bottom: 12px;">
+              Apple Pay
+            </button>
+            <button class="btn btn-secondary">
+              Google Pay
+            </button>
+          </div>
+        </div>
+
+        <div style="background: #F0FDF4; border: 1px solid #86EFAC; border-radius: 12px; padding: 16px; margin-top: 20px; font-size: 13px; color: #065F46;">
+          <div style="font-weight: 700; margin-bottom: 4px;">✓ 安全な決済</div>
+          すべての決済情報は暗号化され、安全に処理されます。カード情報は保存されません。
+        </div>
+
+        <div style="font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: 20px; line-height: 1.6;">
+          支払いを完了すると、<a href="#" style="color: var(--primary);">利用規約</a>と<a href="#" style="color: var(--primary);">キャンセルポリシー</a>に同意したことになります。
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Screen -->
+    <div class="screen" id="screen-confirmation">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>5G 🔋</span>
+      </div>
+
+      <div class="content">
+        <div class="confirmation">
+          <div class="confirmation-icon">✅</div>
+          <div class="confirmation-title">予約が確定しました！</div>
+          <div class="confirmation-text">
+            予約確認メールを送信しました。<br>
+            当日はエキスパートから連絡があります。
+          </div>
+
+          <div class="info-card" style="text-align: left;">
+            <div class="info-card-title">
+              <span>📅</span>
+              <span>予約内容</span>
+            </div>
+            <div style="margin-top: 12px;">
+              <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+                <span style="font-size: 13px; color: var(--text-secondary);">予約番号</span>
+                <span style="font-weight: 600; font-size: 14px; color: var(--primary);">#KE20260415-1234</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+                <span style="font-size: 13px; color: var(--text-secondary);">エキスパート</span>
+                <span style="font-weight: 600; font-size: 14px;">キム・ミンジ</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+                <span style="font-size: 13px; color: var(--text-secondary);">日時</span>
+                <span style="font-weight: 600; font-size: 14px;">4月15日 11:00</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+                <span style="font-size: 13px; color: var(--text-secondary);">場所</span>
+                <span style="font-weight: 600; font-size: 14px;">明洞エリア</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" onclick="showScreen('bookings')">予約を確認する</button>
+          <button class="btn btn-secondary" onclick="showScreen('home')" style="margin-top: 12px;">ホームに戻る</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bookings Screen -->
+    <div class="screen" id="screen-bookings">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>5G 🔋</span>
+      </div>
+
+      <div class="nav-bar">
+        <div>
+          <div class="nav-title">マイ予約</div>
+        </div>
+        <button class="icon-btn">🔔</button>
+      </div>
+
+      <div class="content">
+        <div class="section-header">
+          <h2 class="section-title">次の予約</h2>
+        </div>
+
+        <div class="info-card" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none;">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+            <div>
+              <div style="font-size: 12px; opacity: 0.9; margin-bottom: 4px;">4月15日（火）</div>
+              <div style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">11:00 - 12:00</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;">
+              確定済み
+            </div>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: center; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.2);">
+            <div style="font-size: 36px;">💄</div>
+            <div>
+              <div style="font-weight: 700; margin-bottom: 2px;">ナチュラルメイク</div>
+              <div style="font-size: 13px; opacity: 0.9;">キム・ミンジ • 明洞</div>
+            </div>
+          </div>
+          <div style="margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <button style="background: rgba(255,255,255,0.9); color: var(--primary); border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer;">
+              詳細を見る
+            </button>
+            <button style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer;">
+              チャット
+            </button>
+          </div>
+        </div>
+
+        <div class="section-header" style="margin-top: 32px;">
+          <h2 class="section-title">過去の予約</h2>
+        </div>
+
+        <div class="expert-card">
+          <div class="expert-header">
+            <div class="expert-avatar">💃</div>
+            <div class="expert-info">
+              <div class="expert-name">イ・ジュン</div>
+              <div class="expert-category">K-POPダンスレッスン</div>
+              <div class="expert-meta">
+                <span>3月20日</span>
+                <span>•</span>
+                <span>完了</span>
+              </div>
+            </div>
+          </div>
+          <div class="expert-details">
+            <button class="btn btn-secondary" style="padding: 8px 16px; font-size: 13px;">レビューを書く</button>
+          </div>
+        </div>
+
+        <div class="expert-card">
+          <div class="expert-header">
+            <div class="expert-avatar">🎨</div>
+            <div class="expert-info">
+              <div class="expert-name">パク・ソヒ</div>
+              <div class="expert-category">パーソナルカラー診断</div>
+              <div class="expert-meta">
+                <span>2月10日</span>
+                <span>•</span>
+                <span>完了</span>
+              </div>
+            </div>
+          </div>
+          <div class="expert-details">
+            <div style="display: flex; align-items: center; gap: 4px; color: var(--success); font-size: 13px; font-weight: 600;">
+              <span>✓</span>
+              <span>レビュー済み</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')">
+          <span class="nav-icon">🏠</span>
+          <span>ホーム</span>
+        </div>
+        <div class="nav-item" onclick="showScreen('list')">
+          <span class="nav-icon">🔍</span>
+          <span>探す</span>
+        </div>
+        <div class="nav-item active">
+          <span class="nav-icon">📅</span>
+          <span>予約</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">💬</span>
+          <span>チャット</span>
+        </div>
+        <div class="nav-item" onclick="showScreen('profile')">
+          <span class="nav-icon">👤</span>
+          <span>マイページ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Screen -->
+    <div class="screen" id="screen-profile">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>5G 🔋</span>
+      </div>
+
+      <div class="nav-bar">
+        <div>
+          <div class="nav-title">マイページ</div>
+        </div>
+        <button class="icon-btn">⚙️</button>
+      </div>
+
+      <div class="content">
+        <div class="info-card" style="text-align: center;">
+          <div style="width: 80px; height: 80px; border-radius: 40px; background: linear-gradient(135deg, #FAF5FF, #F3E8FF); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 40px; border: 3px solid var(--border);">
+            👤
+          </div>
+          <div style="font-size: 20px; font-weight: 700; margin-bottom: 4px;">ゆりか</div>
+          <div style="font-size: 14px; color: var(--text-secondary);">yurika@example.com</div>
+        </div>
+
+        <div class="info-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; cursor: pointer;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 20px;">📅</span>
+              <span style="font-weight: 600;">予約履歴</span>
+            </div>
+            <span style="color: var(--text-secondary);">→</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; cursor: pointer; border-top: 1px solid var(--border);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 20px;">♡</span>
+              <span style="font-weight: 600;">お気に入り</span>
+            </div>
+            <span style="color: var(--text-secondary);">→</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; cursor: pointer; border-top: 1px solid var(--border);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 20px;">💳</span>
+              <span style="font-weight: 600;">お支払い方法</span>
+            </div>
+            <span style="color: var(--text-secondary);">→</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; cursor: pointer; border-top: 1px solid var(--border);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 20px;">🌐</span>
+              <span style="font-weight: 600;">言語設定</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 13px; color: var(--text-secondary);">日本語</span>
+              <span style="color: var(--text-secondary);">→</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; cursor: pointer;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 20px;">💬</span>
+              <span style="font-weight: 600;">カスタマーサポート</span>
+            </div>
+            <span style="color: var(--text-secondary);">→</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; cursor: pointer; border-top: 1px solid var(--border);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 20px;">❓</span>
+              <span style="font-weight: 600;">よくある質問</span>
+            </div>
+            <span style="color: var(--text-secondary);">→</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; cursor: pointer; border-top: 1px solid var(--border);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 20px;">📋</span>
+              <span style="font-weight: 600;">利用規約</span>
+            </div>
+            <span style="color: var(--text-secondary);">→</span>
+          </div>
+        </div>
+
+        <div style="background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 12px; padding: 16px; margin-top: 20px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 28px;">🇯🇵</span>
+            <div>
+              <div style="font-weight: 700; font-size: 14px; color: #92400E; margin-bottom: 2px;">日本語サポート</div>
+              <div style="font-size: 12px; color: #B45309;">24時間チャットサポート対応中</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-secondary" style="margin-top: 20px;">ログアウト</button>
+      </div>
+
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')">
+          <span class="nav-icon">🏠</span>
+          <span>ホーム</span>
+        </div>
+        <div class="nav-item" onclick="showScreen('list')">
+          <span class="nav-icon">🔍</span>
+          <span>探す</span>
+        </div>
+        <div class="nav-item" onclick="showScreen('bookings')">
+          <span class="nav-icon">📅</span>
+          <span>予約</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">💬</span>
+          <span>チャット</span>
+        </div>
+        <div class="nav-item active">
+          <span class="nav-icon">👤</span>
+          <span>マイページ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showScreen(screenId) {
+      // Hide all screens
+      document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.remove('active');
+      });
+
+      // Show selected screen
+      const targetScreen = document.getElementById('screen-' + screenId);
+      if (targetScreen) {
+        targetScreen.classList.add('active');
+        window.scrollTo(0, 0);
+      }
+    }
+
+    // Initialize with home screen
+    showScreen('home');
+  </script>
 </body>
 </html>
